@@ -47,23 +47,32 @@ impl App {
             .bold()
             .blue()
             .centered();
-        let text = Line::from("This provides some quick fixes to common issues")
+        let about = Line::from("This provides some quick fixes to common issues")
             .centered();
         let footer = Line::from("Press `Esc`, `Ctrl-C` or `q` to stop running.")
             .centered();
 
         let items = ["Item 1", "Item 2", "Item 3"];
-        let list = List::new(items)
-            .block(Block::bordered().title("List"))
+        let commands = List::new(items)
+            .block(Block::bordered().title("Commands"))
             .style(Style::new().white())
             .highlight_style(Style::new().italic())
             .highlight_symbol(">>")
             .repeat_highlight_symbol(true)
-            .direction(ListDirection::BottomToTop);
+            .direction(ListDirection::TopToBottom);
+
+        let details = List::new(items)
+            .block(Block::bordered().title("Details"))
+            .style(Style::new().white())
+            .highlight_style(Style::new().italic())
+            .highlight_symbol(">>")
+            .repeat_highlight_symbol(true)
+            .direction(ListDirection::TopToBottom);
 
         frame.render_widget(title, title_area);
-        frame.render_widget(text, main_area);
-        frame.render_widget(list, main_area);
+        frame.render_widget(about, main_area);
+        frame.render_widget(commands, left_area);
+        frame.render_widget(details, right_area);
         frame.render_widget(footer, status_area);
     }
 

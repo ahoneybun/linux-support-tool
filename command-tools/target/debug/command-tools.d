@@ -1,1 +1,0 @@
-/home/aaronh/Projects/personal/s76-support/command-tools/target/debug/command-tools: /home/aaronh/Projects/personal/s76-support/command-tools/src/app.rs /home/aaronh/Projects/personal/s76-support/command-tools/src/main.rs
