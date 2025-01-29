@@ -49,7 +49,7 @@ impl App {
             .centered();
         let about = Line::from("This provides some quick fixes to common issues")
             .centered();
-        let footer = Line::from("Press `q` to stop running.")
+        let footer = Line::from("Press `q` to quit the tool.")
             .centered();
 
         let items = ["Item 1", "Item 2", "Item 3"];
@@ -95,6 +95,7 @@ impl App {
     fn on_key_event(&mut self, key: KeyEvent) {
         match (key.modifiers, key.code) {
             (_, KeyCode::Char('q')) => self.quit(),
+            (_, KeyCode::Char('e')) => self.echo(),
             // Add other key handlers here.
             _ => {}
         }
@@ -103,5 +104,10 @@ impl App {
     /// Set running to false to quit the application.
     fn quit(&mut self) {
         self.running = false;
+    }
+
+    /// Other shortcuts
+    fn echo(&mut self) {
+        println!("Hello World");
     }
 }
