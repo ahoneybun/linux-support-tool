@@ -49,7 +49,7 @@ impl App {
             .centered();
         let about = Line::from("This provides some quick fixes to common issues")
             .centered();
-        let footer = Line::from("Press `Esc`, `Ctrl-C` or `q` to stop running.")
+        let footer = Line::from("Press `q` to stop running.")
             .centered();
 
         let items = ["Item 1", "Item 2", "Item 3"];
@@ -94,8 +94,7 @@ impl App {
     /// Handles the key events and updates the state of [`App`].
     fn on_key_event(&mut self, key: KeyEvent) {
         match (key.modifiers, key.code) {
-            (_, KeyCode::Esc | KeyCode::Char('q'))
-            | (KeyModifiers::CONTROL, KeyCode::Char('c') | KeyCode::Char('C')) => self.quit(),
+            (_, KeyCode::Char('q')) => self.quit(),
             // Add other key handlers here.
             _ => {}
         }
