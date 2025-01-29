@@ -1,16 +1,18 @@
+use std::process::Command;
 use color_eyre::Result;
 use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind, KeyModifiers};
 use ratatui::{
     layout::{Constraint, Layout},
     style::{Color, Modifier, Style, Stylize},
     text::{Line, Span},
-    widgets::{Block, Paragraph, List, ListItem, ListDirection},
+    widgets::{Block, Paragraph, List, ListItem, ListDirection, ListState},
     DefaultTerminal, Frame,
 };
 
 #[derive(Debug, Default)]
 pub struct App {
-    /// Is the application running?
+    list_state: ListState,
+    items: Vec<&'static str>,
     exit: bool,
 }
 
@@ -52,6 +54,9 @@ impl App {
         let footer = Line::from("Press `q` to quit the tool.")
             .centered();
 
+        let mut list_state = ListState::default();
+        // list_state.select(Some(0));
+
         let items = ["Item 1", "Item 2", "Item 3"];
         let commands = List::new(items)
             .block(Block::bordered().title("Commands"))
@@ -71,7 +76,7 @@ impl App {
 
         frame.render_widget(title, title_area);
         frame.render_widget(about, main_area);
-        frame.render_widget(commands, left_area);
+        frame.render_stateful_widget(commands, left_area, &mut list_state);
         frame.render_widget(details, right_area);
         frame.render_widget(footer, status_area);
     }
@@ -96,6 +101,18 @@ impl App {
         match (key.modifiers, key.code) {
             (_, KeyCode::Char('q')) => self.quit(),
             (_, KeyCode::Char('e')) => self.echo(),
+            (_, KeyCode::Up) => {
+                if let Some(selected) = self.list_state.selected() {
+                    self.list_state.select(Some(selected.saturating_sub(1)))
+                }
+            }
+            (_, KeyCode::Down) => {
+                if let Some(selected) = self.list_state.selected() {
+                    if selected < self.items.len() - 1 {
+                        self.list_state.select(Some(selected + 1));
+                    }
+                }
+            }
             // Add other key handlers here.
             _ => {}
         }
