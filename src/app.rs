@@ -59,27 +59,27 @@ impl App {
         let mut list_state = ListState::default();
         list_state.select(Some(0));
 
-        let items = ["Item 1", "Item 2", "Item 3"];
+        let items = ["Fix apt/dpkg", "Item 2", "Item 3"];
         let commands = List::new(items)
             .block(Block::bordered().title("Commands"))
             .style(Style::new().white())
-            .highlight_style(Style::new().italic())
-            .highlight_symbol(">>")
+            .highlight_style(Style::new().bold())
+            .highlight_symbol(">> ")
             .repeat_highlight_symbol(true)
             .direction(ListDirection::TopToBottom);
 
-        let details = List::new(items)
-            .block(Block::bordered().title("Details"))
-            .style(Style::new().white())
-            .highlight_style(Style::new().italic())
-            .highlight_symbol(">>")
-            .repeat_highlight_symbol(true)
-            .direction(ListDirection::TopToBottom);
+        // let details = List::new(items)
+        //     .block(Block::bordered().title("Details"))
+        //     .style(Style::new().white())
+        //     .highlight_style(Style::new().italic())
+        //     .highlight_symbol(">>")
+        //     .repeat_highlight_symbol(true)
+        //     .direction(ListDirection::TopToBottom);
 
         frame.render_widget(title, title_area);
         frame.render_widget(about, main_area);
-        frame.render_stateful_widget(commands, left_area, &mut list_state);
-        frame.render_widget(details, right_area);
+        frame.render_stateful_widget(commands, main_area, &mut list_state);
+        // frame.render_widget(details, right_area);
         frame.render_widget(footer, status_area);
     }
 
