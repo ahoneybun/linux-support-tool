@@ -11,7 +11,7 @@ use ratatui::{
 #[derive(Debug, Default)]
 pub struct App {
     /// Is the application running?
-    running: bool,
+    exit: bool,
 }
 
 impl App {
@@ -22,8 +22,8 @@ impl App {
 
     /// Run the application's main loop.
     pub fn run(mut self, mut terminal: DefaultTerminal) -> Result<()> {
-        self.running = true;
-        while self.running {
+        self.exit = true;
+        while self.exit {
             terminal.draw(|frame| App::draw(frame))?;
             self.handle_crossterm_events()?;
         }
@@ -103,7 +103,7 @@ impl App {
 
     /// Set running to false to quit the application.
     fn quit(&mut self) {
-        self.running = false;
+        self.exit = false;
     }
 
     /// Other shortcuts
