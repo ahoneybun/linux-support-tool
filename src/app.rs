@@ -19,7 +19,9 @@ pub struct App {
 impl App {
     /// Construct a new instance of [`App`].
     pub fn new() -> Self {
-        Self::default()
+        let mut app = Self::default();
+        // app.list_state.select(Some(0));
+        app
     }
 
     /// Run the application's main loop.
@@ -55,7 +57,7 @@ impl App {
             .centered();
 
         let mut list_state = ListState::default();
-        // list_state.select(Some(0));
+        list_state.select(Some(0));
 
         let items = ["Item 1", "Item 2", "Item 3"];
         let commands = List::new(items)
